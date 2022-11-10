@@ -1,3 +1,11 @@
+/**
+ * Author: Kieran Ahn
+ *
+ * This module contains the functions which handle user
+ * authentication in the blog. Adapded from Dr. Toal's
+ * notes.
+ */
+
 import { useState, useEffect } from "react";
 import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
 import { auth } from "../firebaseConfig";
