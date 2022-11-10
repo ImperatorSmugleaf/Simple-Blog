@@ -1,9 +1,18 @@
+/**
+ * This is the main app for the blog.
+ * Adapted from Dr. Toal's notes.
+ */
+
 import { useEffect, useState } from "react";
 import Nav from "./Nav";
 import Article from "./Article";
 import ArticleEntry from "./ArticleEntry";
 import { SignIn, SignOut, useAuthentication } from "../services/authService";
-import { fetchArticles, createArticle } from "../services/articleService";
+import {
+    fetchArticles,
+    createArticle,
+    deleteArticle,
+} from "../services/articleService";
 import "./App.css";
 
 export default function App() {
@@ -32,12 +41,28 @@ export default function App() {
         });
     }
 
+    function removeArticle({ article }) {
+        deleteArticle({ article }).then(() => {
+            setArticle(null);
+            setArticles([
+                ...articles.slice(0, articles.indexOf(article)),
+                ...articles.slice(articles.indexOf(article) + 1),
+            ]);
+        });
+    }
+
     return (
         <div className="App">
             <header>
                 Blog
                 {user && (
-                    <button onClick={() => setWriting(true)}>New Article</button>
+                    <button
+                        onClick={() => {
+                            setWriting(true);
+                        }}
+                    >
+                        New Article
+                    </button>
                 )}
                 {!user ? <SignIn /> : <SignOut />}
             </header>
@@ -47,9 +72,9 @@ export default function App() {
             {!user ? (
                 ""
             ) : writing ? (
-                <ArticleEntry addArticle={addArticle} />
+                <ArticleEntry addArticle={addArticle} setWriting={setWriting} />
             ) : (
-                <Article article={article} />
+                <Article article={article} removeArticle={removeArticle} />
             )}
         </div>
     );
