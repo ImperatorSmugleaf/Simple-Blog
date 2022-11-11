@@ -18,15 +18,11 @@ export default function App() {
   const [pageNum, setPageNum] = useState(0)
   const user = useAuthentication()
 
-  // This is a trivial app, so just fetch all the articles once, when
-  // the app is loaded. A real app would do pagination. Note that
-  // "fetchArticles" is what gets the articles from the service and
-  // then "setArticles" writes them into the React state.
   useEffect(() => {
     if (user && articles.length <= pageNum * 10) {
       fetchArticles(pageNum).then(setArticles)
     }
-  }, [user, pageNum])
+  }, [user, pageNum, articles])
 
   // Update the "database" *then* update the internal React state. These
   // two steps are definitely necessary.
