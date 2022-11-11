@@ -34,10 +34,13 @@ export async function deleteArticle({ article }) {
     return await deleteDoc(article.ref);
 }
 
-// This only gets the first 20 articles; remember to implement pagination, Kieran!
-export async function fetchArticles() {
+export async function fetchArticles(pageNum) {
     const snapshot = await getDocs(
-        query(collection(db, "articles"), orderBy("date", "desc"), limit(20))
+        query(
+            collection(db, "articles"),
+            orderBy("date", "desc"),
+            limit((pageNum + 1) * 10)
+        )
     );
     return snapshot.docs.map((doc) => ({
         id: doc.id,

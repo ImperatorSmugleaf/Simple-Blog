@@ -19,6 +19,7 @@ export default function App() {
     const [articles, setArticles] = useState([]);
     const [article, setArticle] = useState(null);
     const [writing, setWriting] = useState(null);
+    const [pageNum, setPageNum] = useState(0);
     const user = useAuthentication();
 
     // This is a trivial app, so just fetch all the articles once, when
@@ -26,10 +27,10 @@ export default function App() {
     // "fetchArticles" is what gets the articles from the service and
     // then "setArticles" writes them into the React state.
     useEffect(() => {
-        if (user) {
-            fetchArticles().then(setArticles);
+        if (user && articles.length <= pageNum * 10) {
+            fetchArticles(pageNum).then(setArticles);
         }
-    }, [user]);
+    }, [user, pageNum]);
 
     // Update the "database" *then* update the internal React state. These
     // two steps are definitely necessary.
@@ -67,7 +68,16 @@ export default function App() {
                 {!user ? <SignIn /> : <SignOut />}
             </header>
 
-            {!user ? "" : <Nav articles={articles} setArticle={setArticle} />}
+            {!user ? (
+                ""
+            ) : (
+                <Nav
+                    articles={articles}
+                    setArticle={setArticle}
+                    pageNum={pageNum}
+                    setPageNum={setPageNum}
+                />
+            )}
 
             {!user ? (
                 ""
