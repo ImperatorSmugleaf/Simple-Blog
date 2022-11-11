@@ -1,5 +1,4 @@
 export default function Nav({ articles, setArticle, pageNum, setPageNum }) {
-  console.log(loading)
   return (
     <nav>
       {!articles || (pageNum + 1) * 10 > Math.ceil(articles.length / 10) * 10 ? (
