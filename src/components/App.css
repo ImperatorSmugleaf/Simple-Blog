@@ -46,7 +46,9 @@ nav p:hover {
 
 nav .pageNav {
   display: flex;
+  margin: 0%;
   flex-direction: row;
+  justify-content: space-around;
   flex: 1 1 auto;
 }
 
