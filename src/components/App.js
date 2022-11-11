@@ -44,7 +44,7 @@ export default function App() {
   return (
     <div className="App">
       <header>
-        Blog
+        Kieran's Simple Blog :)
         {user && (
           <button
             onClick={() => {
