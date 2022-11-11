@@ -1,6 +1,6 @@
 export default function Article({ article, removeArticle }) {
   return (
-    <article>
+    <article className="articleDisplay">
       {!article ? (
         <p>No article selected</p>
       ) : (
